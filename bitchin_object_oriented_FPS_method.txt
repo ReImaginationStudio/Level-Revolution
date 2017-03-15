@@ -1,0 +1,71 @@
+class fps
+{
+private Timer timer;
+private double timeInMilliseconds;
+private int framesPerSecond;
+
+    function update() // in real words, while the program is running.
+    {
+	Settings settings = new Settings(); 
+        // Settings object for getting and storing settings variables.
+
+        timer = new Timer()
+        // initialize a timer object to use and start it.
+
+        timer.start();
+        frameCount = 0; // initialize FPS for alpha testing.
+
+        while (true)
+        {
+            
+            timeInMilliseconds = timer.getTimeInMilliseconds(); 
+            // get the current time in milliseconds to use in FPS statement.
+
+
+            /*
+            * DO SOMETHING THAT REQUIRES BEST POSSIBLE FPS.
+            */
+
+            // timeInMilliseconds is the first thing in this loop, before do something,
+            // because one may want to get time in the regular update function.
+
+            setFPS(settings.getFPS()); 
+            // get the FPS from settings object, then store it in set.
+            
+            fixedUpdate(framesPerSecond);
+            // call fixedUpdate in another method, within another update, to have game run at FPS.
+
+            
+        }
+    }
+    function setFPS(int _FPS)
+    {
+        framesPerSecond = _FPS;
+    }
+    function fixedUpdate(int _FPS) // actual FPS used in an integer, can be a float or a double.
+    {  
+        if (timeInMilliseconds >= 1000/_FPS) // 1000 milliseconds (1 second) divided by frame count, thus your FPS.
+        {
+            /*
+            * DO SOMETHING THAT REQUIRES FIXED FPS.
+            */
+
+
+            frameCounter += 1;
+            // since this is one extra frame, we add one to the frame counter for testing.
+
+            timer = new Timer();
+            timer.start();
+            // reset timer. that way the program can check the exact FPS time point again.
+
+            print(frameCounter + " is the current number frame. ");
+            // again for alpha testing. don't harp on this line too much.
+            
+        }
+        if (frameCounter >= _FPS)
+        {
+            frameCounter = 0;
+            // reset frame counter once the second is used up.
+        }           
+    }
+}
